@@ -20,7 +20,7 @@ public final class GamaProductoDAO extends DAO {
                 throw new Exception("Debe indicar la gama de producto");
             }
 
-            String sql = "INSERT INTO GamaProducto (gama, descripcion_texto, descripcion_html, imagen)"
+            String sql = "INSERT INTO `gama_producto` (gama, descripcion_texto, descripcion_html, imagen)"
                     + "VALUES ( '" + gamaProducto.getGama() + "' , '" + gamaProducto.getDescripcionTexto() + "' , '" + gamaProducto.getDescripcionHtml() + "' , '" + gamaProducto.getImagen() + "' );";
 
             insertarModificarEliminar(sql);
@@ -37,7 +37,7 @@ public final class GamaProductoDAO extends DAO {
                 throw new Exception("Debe indicar la gama de producto que desea modificar");
             }
 
-            String sql = "UPDATE GamaProducto SET "
+            String sql = "UPDATE `gama_producto` SET "
                     + "gama = '" + gamaProducto.getGama() + "' , "
                     + "descripcion_texto = '" + gamaProducto.getDescripcionTexto() + "' , "
                     + "descripcion_html = '" + gamaProducto.getDescripcionHtml() + "' , "
@@ -55,7 +55,7 @@ public final class GamaProductoDAO extends DAO {
     public void eliminarGamaProducto(String gama) throws Exception {
         try {
 
-            String sql = "DELETE FROM GamaProducto WHERE gama = '" + gama + "'";
+            String sql = "DELETE FROM `gama_producto` WHERE gama = '" + gama + "'";
 
             insertarModificarEliminar(sql);
         } catch (Exception e) {
@@ -68,7 +68,7 @@ public final class GamaProductoDAO extends DAO {
     public GamaProducto buscarGamaProductoPorGama(String gama) throws Exception {
         try {
 
-            String sql = "SELECT * FROM GamaProducto "
+            String sql = "SELECT * FROM `gama_producto` "
                     + " WHERE gama = '" + gama + "'";
 
             consultarBase(sql);
@@ -76,11 +76,11 @@ public final class GamaProductoDAO extends DAO {
             GamaProducto gamaProducto = null;
             while (resultado.next()) {
                 gamaProducto = new GamaProducto();
-                gamaProducto.setId(resultado.getInt(1));
-                gamaProducto.setGama(resultado.getString(2));
-                gamaProducto.setDescripcionTexto(resultado.getString(3));
-                gamaProducto.setDescripcionHtml(resultado.getString(4));
-                gamaProducto.setImagen(resultado.getString(5));
+//                gamaProducto.setId(resultado.getInt(1));
+                gamaProducto.setGama(resultado.getString(1));
+                gamaProducto.setDescripcionTexto(resultado.getString(2));
+                gamaProducto.setDescripcionHtml(resultado.getString(3));
+                gamaProducto.setImagen(resultado.getString(4));
             }
             desconectarBase();
             return gamaProducto;
@@ -92,7 +92,7 @@ public final class GamaProductoDAO extends DAO {
 
     public Collection<GamaProducto> listarGamaProductos() throws Exception {
         try {
-            String sql = "SELECT gama, descripcion_texto, descripcion_html, imagen FROM GamaProducto ";
+            String sql = "SELECT gama, descripcion_texto, descripcion_html, imagen FROM `gama_producto` ";
 
             consultarBase(sql);
 
