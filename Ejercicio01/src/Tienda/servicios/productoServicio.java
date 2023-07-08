@@ -90,6 +90,17 @@ public class productoServicio {
         }
     }
 
+    public Producto buscarProductoPorCodigoFabricante(int codigo_fabricante) throws Exception {
+        try {
+            // Buscar el producto por el código en la base de datos
+            Producto producto = dao.buscarProductoPorCodigoFabricante(codigo_fabricante);
+
+            return producto;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     public Producto buscarProductoPorNombre(String codigo) throws Exception {
         try {
             // Buscar el producto por el código en la base de datos

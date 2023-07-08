@@ -10,6 +10,7 @@ import Tienda.servicios.productoServicio;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 /**
  *
@@ -27,7 +28,7 @@ public class Ejercicio01 {
     public static void main(String[] args) {
         fabricanteServicio = new FabricanteServicio();
         productoServicio = new productoServicio();
-        scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in, "UTF-8").useDelimiter("\n");
 
         boolean salir = false;
 
@@ -183,12 +184,15 @@ public class Ejercicio01 {
             System.out.print("Ingrese el precio del producto: ");
             double precio = Double.parseDouble(scanner.nextLine());
 
-            System.out.print("Ingrese el código del fabricante: ");
-            int codigoFabricante = Integer.parseInt(scanner.nextLine());
+            int codigoFabricante = 0;
+            do {                
+                System.out.print("Ingrese el código del fabricante: ");
+                codigoFabricante = Integer.parseInt(scanner.nextLine());
+            } while (productoServicio.buscarProductoPorCodigoFabricante(codigoFabricante)== null);
 
             productoServicio.guardarProducto(codigo, nombre, precio, codigoFabricante);
             System.out.println("Producto ingresado exitosamente.");
-        } catch (Exception e) {
+        } catch ( Exception e) {
             System.out.println("Error al ingresar el producto: " + e.getMessage());
         }
     }

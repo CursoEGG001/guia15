@@ -109,6 +109,36 @@ public class productoDAO extends DAO {
         }
     }
 
+    public Producto buscarProductoPorCodigoFabricante(int codigo_fabricante) throws Exception {
+        try {
+
+            String sql = "SELECT * FROM fabricante "
+                    + " WHERE codigo = '" + codigo_fabricante + "'";
+
+            consultarBase(sql);
+            Producto producto = null;
+            if (resultado.next()) {
+
+                sql = "SELECT * FROM producto "
+                        + " WHERE codigo = '" + codigo_fabricante + "'";
+                consultarBase(sql);
+
+                while (resultado.next()) {
+                    producto = new Producto();
+                    producto.setCodigo(resultado.getInt(1));
+                    producto.setNombre(resultado.getString(2));
+                    producto.setPrecio(resultado.getDouble(3));
+                    producto.setCodigo_fabricante(resultado.getInt(4));
+                }
+            }
+            desconectarBase();
+            return producto;
+        } catch (Exception e) {
+            desconectarBase();
+            throw e;
+        }
+    }
+
     public List<Producto> listarProductos() throws Exception {
         try {
             String sql = "SELECT codigo, nombre, precio, codigo_fabricante FROM producto ";
