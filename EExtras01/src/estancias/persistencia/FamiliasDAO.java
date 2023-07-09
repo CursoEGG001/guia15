@@ -3,8 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package estancias.persistencia;
-
-import estancias.entidades.Familias;
+import estancias.entidades.familias;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,10 +11,10 @@ import java.util.Collection;
  *
  * @author pc
  */
-public class familiasDAO extends DAO {
+public class FamiliasDAO extends DAO {
 
 
-    public void guardarFamilia(Familias familia) throws Exception {
+    public void guardarFamilia(familias familia) throws Exception {
         try {
             if (familia == null) {
                 throw new Exception("Debe indicar la familia");
@@ -32,7 +31,7 @@ public class familiasDAO extends DAO {
         }
     }
 
-    public void modificarFamilia(Familias familia) throws Exception {
+    public void modificarFamilia(familias familia) throws Exception {
         try {
             if (familia == null) {
                 throw new Exception("Debe indicar la familia que desea modificar");
@@ -62,15 +61,15 @@ public class familiasDAO extends DAO {
         }
     }
 
-    public Familias buscarFamiliaPorId(int idFamilia) throws Exception {
+    public familias buscarFamiliaPorId(int idFamilia) throws Exception {
         try {
             String sql = "SELECT * FROM Familias WHERE id_familia = " + idFamilia;
 
             consultar(sql);
 
-            Familias familia = null;
+            familias familia = null;
             while (resultado.next()) {
-                familia = new Familias();
+                familia = new familias();
                 familia.setId_familia(resultado.getInt(1));
                 familia.setNombre(resultado.getString(2));
                 familia.setEdad_minima(resultado.getInt(3));
@@ -87,16 +86,16 @@ public class familiasDAO extends DAO {
         }
     }
 
-    public Collection<Familias> listarFamilias() throws Exception {
+    public Collection<familias> listarFamilias() throws Exception {
         try {
             String sql = "SELECT * FROM Familias";
 
             consultar(sql);
 
-            Familias familia = null;
-            Collection<Familias> familias = new ArrayList<>();
+            familias familia = null;
+            Collection<familias> familias = new ArrayList<>();
             while (resultado.next()) {
-                familia = new Familias();
+                familia = new familias();
                 familia.setId_familia(resultado.getInt(1));
                 familia.setNombre(resultado.getString(2));
                 familia.setEdad_minima(resultado.getInt(3));

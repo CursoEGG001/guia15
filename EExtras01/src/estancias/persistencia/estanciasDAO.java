@@ -3,10 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package estancias.persistencia;
-
-
-import estancias.entidades.Estancias;
-import java.sql.SQLException;
+import estancias.entidades.estancias;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.time.LocalDate;
@@ -17,7 +14,7 @@ import java.time.LocalDate;
 public class estanciasDAO extends DAO {
 
 
-    public void guardarEstancia(Estancias estancia) throws Exception {
+    public void guardarEstancia(estancias estancia) throws Exception {
         try {
             if (estancia == null) {
                 throw new Exception("Debe indicar la estancia");
@@ -34,7 +31,7 @@ public class estanciasDAO extends DAO {
         }
     }
 
-    public void modificarEstancia(Estancias estancia) throws Exception {
+    public void modificarEstancia(estancias estancia) throws Exception {
         try {
             if (estancia == null) {
                 throw new Exception("Debe indicar la estancia que desea modificar");
@@ -64,15 +61,15 @@ public class estanciasDAO extends DAO {
         }
     }
 
-    public Estancias buscarEstanciaPorId(int id_estancia) throws Exception {
+    public estancias buscarEstanciaPorId(int idEstancia) throws Exception {
         try {
-            String sql = "SELECT * FROM Estancia WHERE id_estancia = " + id_estancia;
+            String sql = "SELECT * FROM Estancia WHERE id_estancia = " + idEstancia;
 
             consultar(sql);
 
-            Estancias estancia = null;
+            estancias estancia = null;
             while (resultado.next()) {
-                estancia = new Estancias();
+                estancia = new estancias();
                 estancia.setId_estancia(resultado.getInt(1));
                 estancia.setId_cliente(resultado.getInt(2));
                 estancia.setId_casa(resultado.getInt(3));
@@ -82,29 +79,29 @@ public class estanciasDAO extends DAO {
             }
             desconectar();
             return estancia;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             desconectar();
             throw e;
         }
     }
 
-    public Collection<Estancias> listarEstancias() throws Exception {
+    public Collection<estancias> listarEstancias() throws Exception {
         try {
             String sql = "SELECT * FROM Estancia";
 
             consultar(sql);
 
-            Estancias lasEstancias = null;
-            Collection<Estancias> estancias = new ArrayList<>();
+            estancias estancia = null;
+            Collection<estancias> estancias = new ArrayList<>();
             while (resultado.next()) {
-                lasEstancias = new Estancias();
-                lasEstancias.setId_estancia(resultado.getInt(1));
-                lasEstancias.setId_cliente(resultado.getInt(2));
-                lasEstancias.setId_casa(resultado.getInt(3));
-                lasEstancias.setNombre_huesped(resultado.getString(4));
-                lasEstancias.setFecha_desde(LocalDate.parse(resultado.getString(5)));
-                lasEstancias.setFecha_hasta(LocalDate.parse(resultado.getString(6)));
-                estancias.add(lasEstancias);
+                estancia = new estancias();
+                estancia.setId_estancia(resultado.getInt(1));
+                estancia.setId_cliente(resultado.getInt(2));
+                estancia.setId_casa(resultado.getInt(3));
+                estancia.setNombre_huesped(resultado.getString(4));
+                estancia.setFecha_desde(LocalDate.parse(resultado.getString(5)));
+                estancia.setFecha_hasta(LocalDate.parse(resultado.getString(6)));
+                estancias.add(estancia);
             }
             desconectar();
             return estancias;

@@ -19,16 +19,15 @@ public abstract class DAO {
     protected Connection conexion;
     protected ResultSet resultado;
     protected Statement sentencia;
-
     public void conectar() throws SQLException {
         if (conexion == null) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 String url = "jdbc:mysql://localhost:3306/estancias_exterior";
                 String usuario = "root";
-                String pass = "root";
-                conexion = DriverManager.getConnection(url, usuario, pass);
-            } catch (ClassNotFoundException | SQLException e) {
+                String contraseña = "root";
+                conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/estancias_exterior", "root", "root");
+            } catch (ClassNotFoundException|SQLException e) {
                 throw new SQLException("Error al conectar con la base de datos.", e);
             }
         }

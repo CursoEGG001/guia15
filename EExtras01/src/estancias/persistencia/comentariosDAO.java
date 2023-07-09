@@ -4,7 +4,8 @@
  */
 package estancias.persistencia;
 
-import estancias.entidades.Comentarios;
+import estancias.entidades.comentarios;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -14,7 +15,8 @@ import java.util.Collection;
  */
 public class comentariosDAO extends DAO {
 
-    public void guardarComentario(Comentarios comentario) throws Exception {
+
+    public void guardarComentario(comentarios comentario) throws Exception {
         try {
             if (comentario == null) {
                 throw new Exception("Debe indicar el comentario");
@@ -43,16 +45,16 @@ public class comentariosDAO extends DAO {
         }
     }
 
-    public Collection<Comentarios> listarComentarios() throws Exception {
+    public Collection<comentarios> listarComentarios() throws Exception {
         try {
             String sql = "SELECT * FROM Comentarios";
 
             consultar(sql);
 
-            Comentarios comentario = null;
-            Collection<Comentarios> comentarios = new ArrayList<>();
+            comentarios comentario = null;
+            Collection<comentarios> comentarios = new ArrayList<>();
             while (resultado.next()) {
-                comentario = new Comentarios();
+                comentario = new comentarios();
                 comentario.setId_comentario(resultado.getInt(1));
                 comentario.setId_casa(resultado.getInt(2));
                 comentarios.add(comentario);
