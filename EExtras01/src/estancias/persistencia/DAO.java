@@ -16,7 +16,9 @@ import java.sql.Statement;
 
 public abstract class DAO {
 
-    private Connection conexion;
+    protected Connection conexion;
+    protected ResultSet resultado;
+    protected Statement sentencia;
 
     public void conectar() throws SQLException {
         if (conexion == null) {
@@ -24,9 +26,9 @@ public abstract class DAO {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 String url = "jdbc:mysql://localhost:3306/estancias_exterior";
                 String usuario = "root";
-                String contraseña = "root";
-                conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/estancias_exterior", "root", "root");
-            } catch (ClassNotFoundException|SQLException e) {
+                String pass = "root";
+                conexion = DriverManager.getConnection(url, usuario, pass);
+            } catch (ClassNotFoundException | SQLException e) {
                 throw new SQLException("Error al conectar con la base de datos.", e);
             }
         }
@@ -51,30 +53,12 @@ public abstract class DAO {
         }
     }
 
-    public void insertar(String sql) throws SQLException {
+    public void insertarModificarEliminar(String sql) throws SQLException {
         try {
             Statement statement = conexion.createStatement();
             statement.executeUpdate(sql);
         } catch (SQLException e) {
             throw new SQLException("Error al ejecutar la instrucción de inserción.", e);
-        }
-    }
-
-    public void modificar(String sql) throws SQLException {
-        try {
-            Statement statement = conexion.createStatement();
-            statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            throw new SQLException("Error al ejecutar la instrucción de modificación.", e);
-        }
-    }
-
-    public void eliminar(String sql) throws SQLException {
-        try {
-            Statement statement = conexion.createStatement();
-            statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            throw new SQLException("Error al ejecutar la instrucción de eliminación.", e);
         }
     }
 
