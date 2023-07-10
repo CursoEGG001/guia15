@@ -9,6 +9,7 @@ import estancias.servicios.ClientesServicios;
 import estancias.servicios.ComentariosServicios;
 import estancias.servicios.EstanciasServicios;
 import estancias.servicios.FamiliasServicios;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 /**
@@ -103,6 +104,7 @@ public class app {
     private void listarCasasDisponiblesEnAgosto2020() {
         try {
             System.out.println("Listado de casas disponibles en Reino Unido en agosto de 2020:");
+            
             casasServicios.listarCasasDisponiblesEnPeriodo(LocalDate.of(2020, 8, 1), LocalDate.of(2020, 8, 31), "Reino Unido");
         } catch (Exception e) {
             System.out.println("Error al obtener el listado de casas: " + e.getMessage());
@@ -149,12 +151,12 @@ public class app {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Ingrese el ID del cliente: ");
-        int idCliente = scanner.nextInt();
+        String nombre = scanner.next();
         scanner.nextLine();
 
         try {
             System.out.println("Listado de estancias del cliente:");
-            clientesServicios.listarEstanciasCliente(idCliente);
+            clientesServicios.listarEstanciasCliente(nombre);
         } catch (Exception e) {
             System.out.println("Error al obtener el listado de estancias: " + e.getMessage());
         }

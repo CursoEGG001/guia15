@@ -12,7 +12,10 @@ package estancias.servicios;
 
 import estancias.entidades.estancias;
 import estancias.persistencia.estanciasDAO;
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase que proporciona servicios relacionados con las estancias.
@@ -94,5 +97,19 @@ public class EstanciasServicios {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    public void insertarEstancia(int idCliente, int idCasa, String nombreHuesped, String fechaDesde, String fechaHasta) throws Exception {
+        try {
+            estancias aGuardar = null;
+            aGuardar.setFecha_desde(LocalDate.parse(fechaDesde));
+            aGuardar.setFecha_hasta(LocalDate.parse(fechaHasta));
+            aGuardar.setNombre_huesped(nombreHuesped);
+            aGuardar.setId_casa(idCasa);
+            this.guardarEstancia(aGuardar);
+        } catch (Exception ex) {
+            throw ex;
+        }
+        
     }
 }

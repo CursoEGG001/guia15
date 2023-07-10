@@ -13,8 +13,6 @@ package estancias.servicios;
 import estancias.entidades.familias;
 import estancias.persistencia.FamiliasDAO;
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Clase que proporciona servicios relacionados con las familias.
@@ -98,7 +96,7 @@ public class FamiliasServicios {
         }
     }
 
-    public void listarFamiliasConHijos() {
+    public void listarFamiliasConHijos() throws Exception{
         try {
             Collection<familias> filtro=this.listarFamilias();
             for (familias coincide : filtro) {
@@ -107,7 +105,20 @@ public class FamiliasServicios {
                 }
             }
         } catch (Exception ex) {
-            Logger.getLogger(FamiliasServicios.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        }
+    }
+
+    public void listarFamiliasConCorreoHotmail() throws Exception {
+        try {
+            Collection<familias> filtro = this.listarFamilias();
+            for (familias unaFamilia : filtro) {
+                if (unaFamilia.getEmail().contains("hotmail")) {
+                    System.out.println(unaFamilia);
+                }
+            }
+        } catch (Exception e) {
+            throw e;
         }
     }
     
