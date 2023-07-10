@@ -13,6 +13,8 @@ package estancias.servicios;
 import estancias.entidades.familias;
 import estancias.persistencia.FamiliasDAO;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase que proporciona servicios relacionados con las familias.
@@ -95,4 +97,19 @@ public class FamiliasServicios {
             throw e;
         }
     }
+
+    public void listarFamiliasConHijos() {
+        try {
+            Collection<familias> filtro=this.listarFamilias();
+            for (familias coincide : filtro) {
+                if(coincide.getEdad_minima()>10 && coincide.getNum_hijos()>2) {
+                    System.out.println(coincide);
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FamiliasServicios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 }
