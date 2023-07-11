@@ -9,6 +9,7 @@ import estancias.servicios.ClientesServicios;
 import estancias.servicios.ComentariosServicios;
 import estancias.servicios.EstanciasServicios;
 import estancias.servicios.FamiliasServicios;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -91,8 +92,8 @@ public class app {
 
         scanner.close();
     }
-    
-        private void listarFamiliasConHijos() {
+
+    private void listarFamiliasConHijos() {
         try {
             System.out.println("Listado de familias con al menos 3 hijos y edad máxima inferior a 10 años:");
             familiasServicios.listarFamiliasConHijos();
@@ -104,7 +105,7 @@ public class app {
     private void listarCasasDisponiblesEnAgosto2020() {
         try {
             System.out.println("Listado de casas disponibles en Reino Unido en agosto de 2020:");
-            
+
             casasServicios.listarCasasDisponiblesEnPeriodo(LocalDate.of(2020, 8, 1), LocalDate.of(2020, 8, 31), "Reino Unido");
         } catch (Exception e) {
             System.out.println("Error al obtener el listado de casas: " + e.getMessage());
@@ -137,8 +138,8 @@ public class app {
             System.out.println("Error al obtener el listado de casas: " + e.getMessage());
         }
     }
-    
-     private void listarDatosClientesEstancias() {
+
+    private void listarDatosClientesEstancias() {
         try {
             System.out.println("Listado de datos de clientes con estancias y descripción de la casa:");
             clientesServicios.listarClientesConEstanciasYDescripcionCasa();

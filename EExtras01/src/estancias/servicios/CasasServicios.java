@@ -10,16 +10,21 @@ package estancias.servicios;
  */
 import estancias.entidades.casas;
 import estancias.persistencia.casasDAO;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase que proporciona servicios relacionados con las casas.
  */
 public class CasasServicios {
-
+    
     private casasDAO dao;
-
+    
     public CasasServicios() {
         this.dao = new casasDAO();
     }
@@ -94,7 +99,7 @@ public class CasasServicios {
             throw e;
         }
     }
-
+    
     public void listarCasasDisponiblesEnPeriodo(LocalDate desde, LocalDate hasta, String ubicacion) throws Exception {
         try {
             Collection<casas> filtro = this.listarCasas();
@@ -103,19 +108,19 @@ public class CasasServicios {
                     if (unaCasa.getFecha_desde().isAfter(desde) && unaCasa.getFecha_hasta().isBefore(hasta)) {
                         System.out.println(unaCasa);
                     }
-
+                    
                 }
             }
         } catch (Exception ex) {
             throw ex;
         }
     }
-
+    
     public void listarCasasDisponiblesAPartirDeFecha(LocalDate fechaInicio, int numDias) throws Exception {
         try {
             Collection<casas> filtro = this.listarCasas();
             for (casas disponible : filtro) {
-                if (disponible.getFecha_desde().isAfter(fechaInicio)&&disponible.getFecha_hasta().isBefore(fechaInicio.plusDays(numDias))) {
+                if (disponible.getFecha_desde().isAfter(fechaInicio) && disponible.getFecha_hasta().isBefore(fechaInicio.plusDays(numDias))) {
                     System.out.println(disponible);
                     
                 }
@@ -124,12 +129,40 @@ public class CasasServicios {
             throw ex;
         }
     }
-
-    public void incrementarPrecioCasasReinoUnido(double i) {
-        
+    
+    public void incrementarPrecioCasasReinoUnido(double i) throws Exception {
+        try {
+            Collection<casas> indice = new ArrayList<>();
+            Collection<casas> filtro = this.listarCasas();
+            for (casas disponible : filtro) {
+                if (disponible.getPais().contains("Reino Unido")) {
+                    System.out.println(disponible.getId_casas());
+                    indice.add(disponible);
+                }
+            }
+            casas casa = null;
+            for (casas aModificar : indice) {
+                casa = aModificar;
+                casa.setPrecio_habitacion(aModificar.getPrecio_habitacion() * 1.05);
+            }
+            dao.modificarCasa(casa);
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
-
-    public void obtenerNumeroCasasPorPais() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    public void obtenerNumeroCasasPorPais() throws SQLException {
+        
+        try {
+            String sql = "SELECT `pais`,count(`pais`) FROM `estancias_exterior`.`casas` group by `pais`";
+            
+            ResultSet filtro = dao.consultar(sql);
+            while (filtro.next()) {
+                System.out.println(filtro.getString(1) + " : " + filtro.getInt(2));
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        
     }
 }
